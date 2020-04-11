@@ -179,6 +179,10 @@ master 69e702d] 添加到远程
  create mode 100644 runoob-test.txt
 
 $ git push origin master    # 推送到 Github
+
+git remote add origin git@github.com:wsyshengyun/wsypython.git
+git push -u origin master
+
 ```
 
 ## 删除远程仓库

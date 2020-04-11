@@ -1,0 +1,1 @@
+Persistent  持久性
