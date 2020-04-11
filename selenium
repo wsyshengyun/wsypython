@@ -1,0 +1,167 @@
+## 一、webdriver基本命令
+
+```python
+from selenium import webdriver      	#导入webdriver模块
+driver = webdriver.Chrome()     		#打开google浏览器
+driver.get("https://www.baidu.com")     #打开网址
+driver.get(r"C:\desktop\test.html")     #打开本地html页面
+print(driver.title)        				#获取打开网址的名字
+print(driver.current_url)       		#获取打开网址的url
+复制代码
+```
+
+## 二、标签导航
+
+- 普通 定位标签
+
+```python
+label = driver.find_element_by_id('kw')
+label1 = driver.find_element_by_name('wd')
+label2 = driver.find_element_by_class_name('s_ipt')
+label3 = driver.find_element_by_tag_name('input')
+label4 = driver.find_element_by_link_text('a标签中的内容 准确定位')
+label5 = driver.find_element_by_partial_link_text('a标签中的内容 模糊定位')
+label6 = driver.find_element_by_xpath('放入 copy 标签中的常css路径')
+label7 = driver.find_element_by_css_selector("input=[id='id_name'/name='name_name'/....../]")
+复制代码
+```
+
+- 复杂 xpath定位标签
+
+```python
+#绝对路径
+label = driver.find_element_by_xpath('html/body/p/input')
+label = driver.find_element_by_xpath('html/body/p/input[1]')
+
+#相对路径
+label = driver.find_element_by_xpath('//input')
+label = driver.find_element_by_xpath('//input[2]')
+
+#父节点下找子节点
+label = driver.find_element_by_xpath('//form//input')
+label = driver.find_element_by_xpath('//form//input[2]')
+
+
+# 通过属性查找节点
+label = driver.find_element_by_xpath("//input[@id]")  # 相对路径导航  找到所有的 input标签 其中有 id属性的标签
+label = driver.find_element_by_xpath("//input[@id='1']")  # 属性查找 在所有的input标签中 找到 具有 id=1 的input标签
+label = driver.find_element_by_xpath("//input[@name='xiahua']")
+
+
+# 标签统计 countains
+label = driver.find_element_by_xpath("//*[countains(input)=1]")  # //* 表示 整个文档中 的所有标签，[count(input)=1] 表示 父标签下只有 一个input子标签 的 input标签
+label = driver.find_element_by_xpath("//*[countains(input)=2]")  # //* 表示 整个文档中 的所有标签，[count(input)=1] 表示 父标签下有 两个input子标签 的 input标签
+
+
+# local-name 模糊查找
+label = driver.find_element_by_xpath("//*[local-name()='input']")  # 查找当前文档中 的所有input标签 默认返回第一个
+label = driver.find_element_by_xpath("//*input")      # 查找当前文档中 的所有input标签 默认返回第一个
+
+label = driver.find_element_by_xpath("//*[local-name(),'i']")  # 查找当前文档中 标签名字中 包含字母 i的标签，比如 input title
+label = driver.find_element_by_xpath("//*[local-name(),'i']")  # 查找当前文档中 的所有input标签 默认返回第一个
+
+label = driver.find_element_by_xpath("//*[countains(local-name(),'i')] [last()]")  # 查找当前文档中 所有包含 字母“i”的 标签 的子标签 的 最后一个元素
+label = driver.find_element_by_xpath("//*[strint-length(local-name()=3)] [last()]")  # 查找当前文档中 所有 标签字符个数为5的标签，并且制定返回 最后一个标签。 title input（5个str）
+复制代码
+```
+
+## 三、模拟用户操作
+
+```python
+type = label00.get_attribute('type')        # 显示标签的type属性
+tag_name = label00.tag_name()               #获取标签名字print(label00.size)
+print(label00.id)label00.click()            #模拟a标签  点击事件
+label00.send_keys("模拟搜索内容")     		#模拟input框 输入内容
+label00.clear()                      		#清除input标签中输入的内容
+复制代码
+```
+
+- 模拟鼠标操作
+
+```python
+from selenium.webdriver.common.action_chains import ActionChains
+label00 = driver.find_element_by_link_text("点我 悬浮 显示其他 a标签")
+ActionChains(driver).move_to_element(label00).perform()     #模拟用户悬浮label00.countext_lick()     #右击
+label00.double_click()      #双击
+label00.drag_and_drop()     #拖动
+label00.move_to_element()   #悬浮
+label00.click_and_hold()    #按鼠标左键一直不动
+复制代码
+```
+
+- 模拟键盘操作
+
+```python
+from selenium.webdriver.common.keys import Keys
+label01.send_keys("input输入的内容")label01.send_keys(Keys.BACK_SPACE)      #退格键
+label01.send_keys(Keys.CONTROL,'a')     #全选
+label01.send_keys(Keys.CONTROL,'v')     #粘贴
+label01.send_keys(Keys.CONTROL,'c')     #复制
+label01.send_keys(Keys.CONTROL,'x')     #剪切
+label01.send_keys(Keys.ENTER)           #回车
+复制代码
+```
+
+## 四、控制多窗口
+
+```python
+from selenium import webdriver
+chrome = webdriver.Chrome()chrome.get("https://www.baidu.com")
+chrome.find_element_by_id("kw").send_keys("红花")
+chrome.find_element_by_id("su").click()     #打开百度的第一个窗口
+chrome.find_element_by_partial_link_text("百度百科").click()    #打开百度的第二个窗口
+chrome.find_element_by_partial_link_text("中药").click()        #打开百度的第三个窗口
+print(chrome.window_handles)           #查看当前打开的窗口
+chrome.switch_to_window(chrome.window_handles[1])
+print(chrome.current_url)
+复制代码
+```
+
+## 五、自动登录
+
+```python
+from selenium import webdriver
+import time
+
+def automatic_login(name,pwd,url):
+    chrome = webdriver.Chrome()
+    chrome.get(url)
+    time.sleep(2)
+    chrome.maximize_window()
+    time.sleep(5)
+    chrome.find_element_by_link_text("登录").click()
+    time.sleep(5)
+
+    name_label = chrome.find_element_by_id("id_account_l")
+    name_label.clear()
+    name_label.send_keys(name)
+
+    pwd_label = chrome.find_element_by_id("id_password_l")
+    pwd_label.clear()
+    pwd_label.send_keys(pwd)
+    time.sleep(5)
+
+    login_label = chrome.find_element_by_id("login_btn")
+    login_label.click()
+    time.sleep(15)
+    chrome.close()
+
+if __name__  == "__main__":
+    name = "helloyiwantong@163.com"
+    pwd = "helloyiwantong@1234"
+    url = "http://www.maiziedu.com/"
+    automatic_login(name,pwd,url)
+```
+
+
+
+## 控制浏览器
+
+```python
+driver.refresh()  # 刷新浏览器
+driver.back() # 后退　
+driver.forward() # 前进
+driver.quit() #　退出
+.set_window_size(480, 800) # 设置大小
+```
+
