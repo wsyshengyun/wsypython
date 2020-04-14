@@ -8,7 +8,7 @@ sudo dpkg -r 软件名
 
 ## 安装软件
 
-### deb包
+**deb包**
 
 ```
 sudo kpkg -i  bao.deb 
@@ -20,3 +20,10 @@ sudo kpkg -i  bao.deb
 dpkg --list
 ```
 
+## 桌面切换
+
+super + pageUp/ pageDown  可以向上向下切换桌面  
+
+**程序显示左半屏/右半屏/全屏**  
+
+super + <-  /  ->   / ^|   (左右上箭头)

@@ -1,4 +1,4 @@
-# 节点
+#  节点
 
 ## 节点的类型
 
@@ -9,7 +9,21 @@
 tag.find_all \ tag.find 等方法查找他的“子”
 ```
 
+### 全部兄弟节点
 
+> **知识点：.next_siblings  .previous_siblings 属性**
+
+### **前后节点**
+
+> **知识点：.next_element  .previous_element 属性**
+
+与 .next_sibling  .previous_sibling 不同，它并不是针对于兄弟节点，而是在所有节点，不分层次
+
+### **所有前后节点**
+
+> **知识点：.next_elements  .previous_elements 属性**
+
+通过 `.next_siblings` 和 `.previous_siblings` 属性可以对当前节点的兄弟节点迭代输出
 
 ## 节点的各种值
 
@@ -22,8 +36,28 @@ tag.find_all \ tag.find 等方法查找他的“子”
 ### 获取文本
 
 - tag.string
-
 - tag.get_text()
+- tag.has_attr(‘class’)
+
+## 节点的内容
+
+.string属性   
+
+
+
+## 多个内容
+
+.**strings**
+
+```
+不过要遍历获取  for i in soup.strings:
+```
+
+**.stripped_strings** 
+
+输出的字符串中可能包含了很多空格或空行,使用 `.stripped_strings` 可以去除多余空白内容
+
+
 
 ## 子
 
@@ -41,11 +75,90 @@ tag.find_all \ tag.find 等方法查找他的“子”
 
 > 注意：‘\n’也可以是一个元素
 
+## 子孙
+
+.descendants
+
+是一个什么类型呢?
+
 # 方法选择器
 
 ## ｆｉｎｄ＿ａｌｌ（name, attrs, recursive, text, **kwargs）
 
 `查询符合条件的元素`
+
+### name参数
+
+- A 传字符串
+
+- B传正则表达式
+
+  ```
+  import re
+  for tag in soup.find_all(re.compile("^b")):
+      print(tag.name)
+  # body
+  # b
+  ```
+
+  
+
+- C传列表
+
+  ```
+  soup.find_all(["a", "b"])	
+  ```
+
+  
+
+- D传True
+
+- E传方法 
+
+```
+soup.find_all(has_class_but_no_id)
+# [<p class="title"><b>The Dormouse's story</b></p>,
+#  <p class="story">Once upon a time there were...</p>,
+#  <p class="story">...</p>]
+```
+
+### keyword参数
+
+- id = ‘link2’ 
+
+- href = re.compile(‘elsie’)
+
+- href=re..., id = ‘link1’ 混合
+
+- class = ‘’, 要改为 class_ = ‘’ # class是python的关键词
+
+- data* 属性不能使用,但可以
+
+  ```
+  attrs = {'data-foo':'value'}
+  ```
+
+
+
+### text 参数
+
+- text = ‘Elsie’
+- text = [‘Tillie’, ‘Elsie’, ‘Lacie’]
+- text=re.compile(‘Dormouse’)
+
+
+
+### limit参数
+
+- limit=2
+
+
+
+
+
+### recursive参数 
+
+默认为True, 会检索当前tag的所有子孙节点;  如果只搜索tag的直接子节点,可以使用recursive=False
 
 ## 查询的结果
 
