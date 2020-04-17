@@ -26,3 +26,29 @@ sudo apt install nixnote2
 
 
 
+### 文档查看系统
+
+(https://zealdocs.org/download.html#linux)
+
+Zeal linux下的dash
+
+```
+sudo apt-get install zeal
+```
+
+
+
+### ack [快速查询文件的关键字](https://beyondgrep.com/)
+
+```
+sudo apt install ack-grep
+```
+
+
+
+### mysql [查询工具](https://github.com/dbcli/mycli)
+
+```
+sudo apt-get install mycli
+```
+

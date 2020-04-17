@@ -45,3 +45,8 @@ datapython = json.load(file): 读取json文件
 
 
 
+## 技巧
+
+### lambda 作为判断条件
+
+![image-20200416212106935](/home/wsy/.config/Typora/typora-user-images/image-20200416212106935.png)
